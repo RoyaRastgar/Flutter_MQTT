@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 
-enum MQTTAppConnectionState { connected, disconnected, connecting }
+enum MQTTAppConnectionState { connected, disconnected, connecting, autoConnecting, autoConnected }
 class MQTTAppState with ChangeNotifier{
   MQTTAppConnectionState _appConnectionState = MQTTAppConnectionState.disconnected;
   String _receivedText = '';

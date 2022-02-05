@@ -26,6 +26,10 @@ class MQTTManager {
     _client = MqttServerClient(_host, _identifier);
     _client!.port = 1883;
     _client!.keepAlivePeriod = 20;
+    _client!.autoReconnect = true;
+    _client!.resubscribeOnAutoReconnect = false;
+    _client!.onAutoReconnect = onAutoReconnect;
+    _client!.onAutoReconnected = onAutoReconnected;
     _client!.onDisconnected = onDisconnected;
     _client!.secure = false;
     _client!.logging(on: true);
@@ -69,6 +73,22 @@ class MQTTManager {
     builder.addString(message);
     _client!.publishMessage(_topic, MqttQos.exactlyOnce, builder.payload!);
   }
+
+  void onAutoReconnect() {
+    _currentState.setAppConnectionState(MQTTAppConnectionState.autoConnecting);
+
+    print(
+        'EXAMPLE::onAutoReconnect client callback - Client auto reconnection sequence will start');
+  }
+
+  /// The post auto re connect callback
+  void onAutoReconnected() {
+    _currentState.setAppConnectionState(MQTTAppConnectionState.autoConnected);
+
+    print(
+        'EXAMPLE::onAutoReconnected client callback - Client auto reconnection sequence has completed');
+  }
+
 
   /// The subscribed callback
   void onSubscribed(String topic) {

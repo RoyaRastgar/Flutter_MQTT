@@ -205,6 +205,10 @@ class _MQTTViewState extends State<MQTTView> {
         return 'Connecting';
       case MQTTAppConnectionState.disconnected:
         return 'Disconnected';
+      case MQTTAppConnectionState.autoConnecting:
+        return 'autoConnecting';
+      case MQTTAppConnectionState.autoConnected:
+        return 'autoConnected';
     }
   }
 
